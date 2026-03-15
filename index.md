@@ -13,11 +13,10 @@ title: Home
 - 质量低劣的我的小说
 - 各种各样的杂文（或许吧）
 
-## 文学类
-[Article](/article)
+## 内容分类
+[文学类](/article)
+[笔记类(to be update)](/note)
 
-## 笔记类
-To be update...
 
 ## 全部文章
 
