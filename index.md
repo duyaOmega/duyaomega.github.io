@@ -13,7 +13,13 @@ title: Home
 - 质量低劣的我的小说
 - 各种各样的杂文（或许吧）
 
-## 最近文章
+## 文学类
+[Article](/article)
+
+## 笔记类
+To be update...
+
+## 全部文章
 
 <ul>
   {% for post in site.posts %}
@@ -28,4 +34,4 @@ title: Home
 
 ## 其他页面
 
-- [About](/about)
+- [Bilibili](https://space.bilibili.com/1061632265)
