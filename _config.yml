@@ -1,0 +1,20 @@
+title: 渡鸦的小窝
+description: 笔记、文学写作和各种乱七八糟的东西。你愿意倾听我的絮语吗？
+theme: minima
+lang: zh-CN
+timezone: Asia/Shanghai
+
+author:
+  name: 渡鸦
+
+markdown: kramdown
+permalink: /:categories/:year/:month/:day/:title/
+
+header_pages:
+  - about.md
+
+minima:
+  social_links:
+    - title: GitHub
+      icon: github
+      url: "https://github.com/duyaomega"
