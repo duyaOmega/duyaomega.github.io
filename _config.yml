@@ -4,8 +4,7 @@ theme: minima
 lang: zh-CN
 timezone: Asia/Shanghai
 
-author:
-  name: 渡鸦
+author: 渡鸦
 
 markdown: kramdown
 permalink: /:categories/:year/:month/:day/:title/
