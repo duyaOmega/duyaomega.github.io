@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="{{ page.lang | default: site.lang | default: 'zh-CN' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      {%- if page.title -%}
+        {{ page.title | escape }} | {{ site.title | escape }}
+      {%- else -%}
+        {{ site.title | escape }}
+      {%- endif -%}
+    </title>
+    <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | escape }}">
+    <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-hero">
+        <div class="hero-inner">
+          <nav class="site-nav" aria-label="主导航">
+            <a class="site-mark" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+            <div class="nav-links">
+              <a href="{{ '/' | relative_url }}">首页</a>
+              <a href="{{ '/article/' | relative_url }}">文学</a>
+              <a href="{{ '/note/' | relative_url }}">笔记</a>
+              <a href="{{ '/other/' | relative_url }}">其他</a>
+              <a href="{{ '/about/' | relative_url }}">关于</a>
+            </div>
+          </nav>
+          <p class="hero-kicker">Personal Notes & Fiction</p>
+          <h1 class="hero-title">{{ page.hero_title | default: page.title | default: site.title | escape }}</h1>
+          <p class="hero-description">{{ page.hero_description | default: site.description | escape }}</p>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        {{ content }}
+      </main>
+
+      <footer class="site-footer">
+        <span>{{ site.title | escape }}</span>
+        <span> · </span>
+        <span>{{ site.description | escape }}</span>
+      </footer>
+    </div>
+  </body>
+</html>
