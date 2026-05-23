@@ -1,0 +1,222 @@
+backend:
+  name: github
+  repo: duyaOmega/duyaomega.github.io
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+locale: zh_Hans
+site_url: https://duyaomega.github.io
+display_url: https://duyaomega.github.io
+media_folder: assets/uploads
+public_folder: /assets/uploads
+publish_mode: editorial_workflow
+
+slug:
+  encoding: unicode
+  clean_accents: false
+  sanitize_replacement: "-"
+
+collections:
+  - name: posts
+    label: 文章
+    label_singular: 文章
+    folder: _posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "{{categories}}/{{year}}/{{month}}/{{day}}/{{slug}}/"
+    sortable_fields:
+      - date
+      - title
+      - categories
+    view_filters:
+      - label: 文学类
+        field: categories
+        pattern: article
+      - label: 笔记类
+        field: categories
+        pattern: note
+    fields:
+      - label: 布局
+        name: layout
+        widget: hidden
+        default: post
+      - label: 标题
+        name: title
+        widget: string
+      - label: 发布日期
+        name: date
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+        format: YYYY-MM-DD
+        default: "{{now}}"
+      - label: 分类
+        name: categories
+        widget: select
+        options:
+          - label: 文学类
+            value: article
+          - label: 笔记类
+            value: note
+          - label: 其他
+            value: other
+        default: article
+      - label: 标签
+        name: tags
+        widget: list
+        required: false
+        summary: "{{fields.tag}}"
+        field:
+          label: 标签
+          name: tag
+          widget: string
+      - label: 摘要
+        name: excerpt
+        widget: text
+        required: false
+      - label: 封面图
+        name: image
+        widget: image
+        required: false
+      - label: 正文
+        name: body
+        widget: markdown
+
+  - name: pages
+    label: 页面
+    files:
+      - label: 首页
+        name: home
+        file: index.md
+        fields:
+          - label: 布局
+            name: layout
+            widget: hidden
+            default: default
+          - label: 标题
+            name: title
+            widget: string
+          - label: 正文
+            name: body
+            widget: markdown
+      - label: 文学分类页
+        name: article
+        file: article.md
+        fields:
+          - label: 布局
+            name: layout
+            widget: hidden
+            default: default
+          - label: 标题
+            name: title
+            widget: string
+          - label: 正文
+            name: body
+            widget: markdown
+      - label: 笔记分类页
+        name: note
+        file: note.md
+        fields:
+          - label: 布局
+            name: layout
+            widget: hidden
+            default: default
+          - label: 标题
+            name: title
+            widget: string
+          - label: 正文
+            name: body
+            widget: markdown
+      - label: 其他分类页
+        name: other
+        file: other.md
+        fields:
+          - label: 布局
+            name: layout
+            widget: hidden
+            default: default
+          - label: 标题
+            name: title
+            widget: string
+          - label: 正文
+            name: body
+            widget: markdown
+      - label: 关于
+        name: about
+        file: about.md
+        fields:
+          - label: 布局
+            name: layout
+            widget: hidden
+            default: page
+          - label: 标题
+            name: title
+            widget: string
+          - label: 正文
+            name: body
+            widget: markdown
+
+  - name: settings
+    label: 站点设置
+    files:
+      - label: 站点信息
+        name: site
+        file: _config.yml
+        fields:
+          - label: 站点标题
+            name: title
+            widget: string
+          - label: 站点描述
+            name: description
+            widget: text
+          - label: 主题
+            name: theme
+            widget: hidden
+            default: minima
+          - label: 语言
+            name: lang
+            widget: hidden
+            default: zh-CN
+          - label: 时区
+            name: timezone
+            widget: hidden
+            default: Asia/Shanghai
+          - label: 作者
+            name: author
+            widget: string
+          - label: Markdown 引擎
+            name: markdown
+            widget: hidden
+            default: kramdown
+          - label: 永久链接格式
+            name: permalink
+            widget: hidden
+            default: /:categories/:year/:month/:day/:title/
+          - label: 顶部导航页面
+            name: header_pages
+            widget: list
+            default:
+              - about.md
+            field:
+              label: 页面文件
+              name: page
+              widget: string
+          - label: Minima 主题设置
+            name: minima
+            widget: object
+            fields:
+              - label: 社交链接
+                name: social_links
+                widget: list
+                fields:
+                  - label: 标题
+                    name: title
+                    widget: string
+                  - label: 图标
+                    name: icon
+                    widget: string
+                    required: false
+                  - label: 链接
+                    name: url
+                    widget: string
