@@ -551,20 +551,66 @@ a:hover {
   font-size: 15px;
 }
 
-.writer-editor-grid {
+.writer-load-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.writer-editor {
+  --editor-left: 50%;
+  display: grid;
+  grid-template-columns: minmax(260px, var(--editor-left)) 10px minmax(260px, 1fr);
+  min-height: 560px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--field);
+}
+
+.writer-pane {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+}
+
+.writer-pane label {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(60, 128, 120, 0.06);
+}
+
+.writer-pane textarea {
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.writer-resizer {
+  width: 10px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, transparent 0 3px, rgba(60, 128, 120, 0.46) 3px 7px, transparent 7px 100%),
+    rgba(60, 128, 120, 0.08);
+  cursor: col-resize;
+}
+
+.writer-resizer:hover,
+.writer-resizer:focus {
+  background:
+    linear-gradient(90deg, transparent 0 3px, rgba(169, 71, 50, 0.72) 3px 7px, transparent 7px 100%),
+    rgba(169, 71, 50, 0.1);
+  outline: 0;
 }
 
 .writer-preview {
-  min-height: 420px;
-  max-height: 720px;
   overflow: auto;
   padding: 18px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--field);
+  background: transparent;
 }
 
 .writer-preview:empty::before {
@@ -725,8 +771,26 @@ a:hover {
     grid-template-columns: 1fr;
   }
 
-  .writer-editor-grid {
+  .writer-load-row {
     grid-template-columns: 1fr;
+  }
+
+  .writer-editor {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .writer-resizer {
+    display: none;
+  }
+
+  .writer-pane {
+    min-height: 360px;
+  }
+
+  .writer-preview-pane {
+    border-top: 1px solid var(--line);
   }
 }
 

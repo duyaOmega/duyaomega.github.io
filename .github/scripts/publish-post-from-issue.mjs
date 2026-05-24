@@ -21,18 +21,21 @@ const date = normalizeDate(fields["发布日期"]) || todayInShanghai();
 const slug = normalizeSlug(fields["自定义链接名"]) || normalizeSlug(title);
 const tags = normalizeTags(fields["标签"]);
 const excerpt = (fields["摘要"] || "").trim();
+const sourcePath = normalizeSourcePath(fields["原文章路径"]);
 const body = requireField(fields, "正文");
 
-const fileName = `${date}-${slug}-${issue.number}.md`;
 const outputDir = path.join(process.cwd(), "_posts");
-const outputPath = path.join(outputDir, fileName);
+const outputPath = sourcePath
+  ? path.join(process.cwd(), sourcePath)
+  : path.join(outputDir, `${date}-${slug}-${issue.number}.md`);
+const outputFile = path.basename(outputPath);
 
 await mkdir(outputDir, { recursive: true });
 await removePreviousPostForIssue(outputDir, issue.number, outputPath);
 await writeFile(outputPath, buildPost({ title, category, date, tags, excerpt, body }), "utf8");
 
 console.log(`POST_PATH=${outputPath}`);
-console.log(`POST_FILE=${fileName}`);
+console.log(`POST_FILE=${outputFile}`);
 
 function parseIssueForm(markdown) {
   const result = {};
@@ -106,6 +109,20 @@ function normalizeTags(value = "") {
     .split(",")
     .map((tag) => tag.trim())
     .filter(Boolean);
+}
+
+function normalizeSourcePath(value = "") {
+  const postPath = value.trim().replace(/\\/g, "/");
+
+  if (!postPath) {
+    return "";
+  }
+
+  if (!/^_posts\/[^/]+\.md$/.test(postPath)) {
+    throw new Error(`Invalid source post path: ${value}`);
+  }
+
+  return postPath;
 }
 
 function normalizeSlug(value) {

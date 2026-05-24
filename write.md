@@ -9,6 +9,17 @@ hero_description: 在这里整理标题、分类、标签和正文，然后交�
 <section class="content-panel paper writer-panel">
   <form class="writer-form" id="post-writer">
     <div class="writer-field">
+      <label for="existing-post">编辑已有文章</label>
+      <div class="writer-load-row">
+        <select id="existing-post" name="existingPost">
+          <option value="">新建文章</option>
+        </select>
+        <button class="writer-button secondary" type="button" id="load-existing-post">加载</button>
+      </div>
+      <input id="post-path" name="postPath" type="hidden">
+    </div>
+
+    <div class="writer-field">
       <label for="post-title">标题</label>
       <input id="post-title" name="title" type="text" placeholder="例如：望断清波无双鲤" required>
     </div>
@@ -46,13 +57,15 @@ hero_description: 在这里整理标题、分类、标签和正文，然后交�
       <textarea id="post-excerpt" name="excerpt" rows="3" placeholder="简短介绍这篇文章。"></textarea>
     </div>
 
-    <div class="writer-editor-grid">
-      <div class="writer-field">
+    <div class="writer-editor" id="writer-editor">
+      <div class="writer-pane writer-source-pane">
         <label for="post-body">正文</label>
         <textarea id="post-body" name="body" rows="18" placeholder="在这里写正文，支持 Markdown。" required></textarea>
       </div>
 
-      <div class="writer-field">
+      <button class="writer-resizer" type="button" id="writer-resizer" aria-label="拖动调整编辑和预览宽度"></button>
+
+      <div class="writer-pane writer-preview-pane">
         <label for="post-preview">预览</label>
         <div class="writer-preview post-content" id="post-preview" aria-live="polite"></div>
       </div>

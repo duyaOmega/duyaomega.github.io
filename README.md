@@ -12,6 +12,8 @@
 4. 在 GitHub 页面确认提交 issue。
 5. GitHub Actions 会自动生成 `_posts/YYYY-MM-DD-slug-issue.md`，并部署 GitHub Pages。
 
+如果要修改已有文章，在 `/write/` 顶部选择文章并点击 `加载`，修改后再发布。workflow 会覆盖原 `_posts` 文件，因此分类、标签、摘要和正文都会更新。
+
 也可以直接打开仓库的 `Issues` 页面，点击 `New issue`，选择 `发布文章` 表单。
 
 文章分类目前有：
