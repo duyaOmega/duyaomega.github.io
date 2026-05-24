@@ -52,7 +52,7 @@ hero_description: 笔记、文学写作和各种乱七八糟的东西。你愿�
   <aside class="side-panel paper">
     <div class="side-section">
       <p class="side-title">小窝索引</p>
-      <p>这里存放笔记、文学写作和各种乱七八糟的东西。页面会安静一点，文字可以慢慢读。</p>
+      <p>这里存放笔记、文学写作和各种乱七八糟的东西。在这里，看见我。</p>
     </div>
     <div class="side-section">
       <p class="side-title">最近更新</p>
