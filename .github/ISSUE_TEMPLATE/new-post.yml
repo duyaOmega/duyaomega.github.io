@@ -1,0 +1,76 @@
+name: 发布文章
+description: 用表单发布一篇新的博客文章
+title: "[post] "
+labels:
+  - publish-post
+body:
+  - type: markdown
+    attributes:
+      value: |
+        填完这个表单后提交 issue，GitHub Actions 会自动把它发布到 `_posts`。
+
+  - type: input
+    id: title
+    attributes:
+      label: 标题
+      description: 文章显示在博客里的标题。
+      placeholder: 例如：望断清波无双鲤
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 分类
+      options:
+        - article
+        - note
+        - other
+      default: 0
+    validations:
+      required: true
+
+  - type: input
+    id: tags
+    attributes:
+      label: 标签
+      description: 可选，用英文逗号分隔。比如 novel, campus, note
+      placeholder: novel, note
+    validations:
+      required: false
+
+  - type: textarea
+    id: excerpt
+    attributes:
+      label: 摘要
+      description: 可选。会写入文章 front matter，未来可以用于列表摘要。
+      placeholder: 简短介绍这篇文章。
+    validations:
+      required: false
+
+  - type: input
+    id: date
+    attributes:
+      label: 发布日期
+      description: 可选。格式为 YYYY-MM-DD；留空则使用 workflow 运行当天。
+      placeholder: 2026-05-24
+    validations:
+      required: false
+
+  - type: input
+    id: slug
+    attributes:
+      label: 自定义链接名
+      description: 可选。留空会根据标题自动生成；建议用英文、数字和短横线。
+      placeholder: my-new-post
+    validations:
+      required: false
+
+  - type: textarea
+    id: body
+    attributes:
+      label: 正文
+      description: 支持 Markdown。图片可以直接拖到输入框里，GitHub 会生成图片链接。
+      placeholder: 在这里写正文。
+    validations:
+      required: true

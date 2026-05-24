@@ -67,6 +67,7 @@ hero_description: 笔记、文学写作和各种乱七八糟的东西。你愿�
       <ul>
         <li><a href="https://space.bilibili.com/1061632265">Bilibili</a></li>
         <li><a href="https://github.com/duyaomega">GitHub</a></li>
+        <li><a href="{{ '/write/' | relative_url }}">写文章</a></li>
       </ul>
     </div>
   </aside>

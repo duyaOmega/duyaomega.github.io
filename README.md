@@ -4,13 +4,23 @@
 
 ## 写文章
 
-上线后访问 `/admin/` 进入内容后台。文章会保存到 `_posts`，图片会保存到 `assets/uploads`，推送到 `main` 后 GitHub Actions 会自动重新部署。
+推荐使用站内写作页发布文章：
+
+1. 打开 `/write/`。
+2. 填写标题、分类、标签、摘要和正文。
+3. 点击 `去 GitHub 发布`。
+4. 在 GitHub 页面确认提交 issue。
+5. GitHub Actions 会自动生成 `_posts/YYYY-MM-DD-slug-issue.md`，并部署 GitHub Pages。
+
+也可以直接打开仓库的 `Issues` 页面，点击 `New issue`，选择 `发布文章` 表单。
 
 文章分类目前有：
 
 - `article`: 文学类
 - `note`: 笔记类
 - `other`: 其他
+
+为了避免公开仓库里任何人都能发文，自动发布 workflow 只接受仓库 owner 创建、标题以 `[post]` 开头的 issue。
 
 ## 后台登录
 

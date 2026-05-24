@@ -447,6 +447,114 @@ a:hover {
   text-align: center;
 }
 
+.writer-panel {
+  width: min(920px, 100%);
+  margin: 0 auto;
+}
+
+.writer-form {
+  display: grid;
+  gap: 20px;
+}
+
+.writer-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.writer-field {
+  display: grid;
+  gap: 8px;
+}
+
+.writer-field label {
+  color: #1a2a34;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.writer-field input,
+.writer-field select,
+.writer-field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.88);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.6;
+}
+
+.writer-field input,
+.writer-field select {
+  min-height: 46px;
+  padding: 8px 12px;
+}
+
+.writer-field textarea {
+  resize: vertical;
+  min-height: 120px;
+  padding: 12px;
+}
+
+.writer-field #post-body {
+  min-height: 420px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 15px;
+}
+
+.writer-field input:focus,
+.writer-field select:focus,
+.writer-field textarea:focus {
+  border-color: rgba(60, 128, 120, 0.72);
+  box-shadow: 0 0 0 3px rgba(60, 128, 120, 0.16);
+  outline: 0;
+}
+
+.writer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.writer-button {
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 1px solid #1e706b;
+  border-radius: 8px;
+  background: #1e706b;
+  color: #fff8ec;
+  cursor: pointer;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.writer-button:hover {
+  background: #185b57;
+}
+
+.writer-button.secondary {
+  border-color: var(--line);
+  background: transparent;
+  color: #1e706b;
+}
+
+.writer-button.secondary:hover {
+  border-color: rgba(169, 71, 50, 0.42);
+  color: var(--ember);
+}
+
+.writer-status {
+  color: var(--muted);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
 @media (max-width: 860px) {
   body {
     font-size: 17px;
@@ -481,6 +589,10 @@ a:hover {
   .post-list li {
     grid-template-columns: 1fr;
     gap: 4px;
+  }
+
+  .writer-row {
+    grid-template-columns: 1fr;
   }
 }
 
