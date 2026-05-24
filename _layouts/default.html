@@ -12,6 +12,13 @@
     </title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | escape }}">
     <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+    <script>
+      (() => {
+        const saved = localStorage.getItem("blog-theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = saved || (prefersDark ? "dark" : "light");
+      })();
+    </script>
   </head>
   <body>
     <div class="site-shell">
@@ -26,6 +33,7 @@
               <a href="{{ '/other/' | relative_url }}">其他</a>
               <a href="{{ '/write/' | relative_url }}">写文章</a>
               <a href="{{ '/about/' | relative_url }}">关于</a>
+              <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换日夜模式">日</button>
             </div>
           </nav>
           <p class="hero-kicker">Personal Notes & Fiction</p>
@@ -44,5 +52,6 @@
         <span>{{ site.description | escape }}</span>
       </footer>
     </div>
+    <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
   </body>
 </html>

@@ -46,9 +46,16 @@ hero_description: 在这里整理标题、分类、标签和正文，然后交�
       <textarea id="post-excerpt" name="excerpt" rows="3" placeholder="简短介绍这篇文章。"></textarea>
     </div>
 
-    <div class="writer-field">
-      <label for="post-body">正文</label>
-      <textarea id="post-body" name="body" rows="18" placeholder="在这里写正文，支持 Markdown。" required></textarea>
+    <div class="writer-editor-grid">
+      <div class="writer-field">
+        <label for="post-body">正文</label>
+        <textarea id="post-body" name="body" rows="18" placeholder="在这里写正文，支持 Markdown。" required></textarea>
+      </div>
+
+      <div class="writer-field">
+        <label for="post-preview">预览</label>
+        <div class="writer-preview post-content" id="post-preview" aria-live="polite"></div>
+      </div>
     </div>
 
     <div class="writer-actions">

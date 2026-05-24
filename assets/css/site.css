@@ -4,12 +4,36 @@
   --paper: #fbf8f0;
   --paper-soft: #f4efe4;
   --line: #ded6c8;
+  --field: rgba(255, 253, 247, 0.88);
+  --field-ink: #202326;
+  --hero-text: #fff8ec;
+  --hero-muted: #dfd6c9;
+  --hero-kicker: #cfe4df;
   --night: #0d1824;
   --night-2: #172b3a;
   --lake: #3c8078;
   --ember: #a94732;
   --gold: #c99b54;
   --shadow: 0 22px 50px rgba(15, 24, 32, 0.18);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --ink: #ede6d8;
+  --muted: #b8c2c7;
+  --paper: #17222c;
+  --paper-soft: #111b24;
+  --line: rgba(213, 224, 222, 0.18);
+  --field: rgba(8, 16, 23, 0.62);
+  --field-ink: #f4eadb;
+  --hero-text: #fff8ec;
+  --hero-muted: #e7ddcd;
+  --hero-kicker: #bde9df;
+  --lake: #7fc6b9;
+  --ember: #e28b76;
+  --gold: #deb76e;
+  --shadow: 0 22px 50px rgba(0, 0, 0, 0.34);
+  color-scheme: dark;
 }
 
 * {
@@ -25,7 +49,7 @@ body {
   color: var(--ink);
   background:
     radial-gradient(circle at 18% 0%, rgba(201, 155, 84, 0.18), transparent 34rem),
-    linear-gradient(180deg, #0d1824 0, #182836 21rem, var(--paper) 21rem, #f7f0e5 100%);
+    linear-gradient(180deg, #102134 0, #315865 21rem, var(--paper) 21rem, var(--paper-soft) 100%);
   font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
   font-size: 18px;
   line-height: 1.9;
@@ -58,8 +82,8 @@ a:hover {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 75% 20%, rgba(120, 178, 166, 0.22), transparent 20rem),
-    linear-gradient(120deg, rgba(13, 24, 36, 0.94), rgba(21, 43, 58, 0.86)),
+    radial-gradient(circle at 75% 20%, rgba(238, 214, 161, 0.2), transparent 18rem),
+    linear-gradient(120deg, rgba(13, 24, 36, 0.62), rgba(21, 43, 58, 0.38)),
     url("/assets/img/night-lake-hero.png") center bottom / cover no-repeat;
 }
 
@@ -89,7 +113,7 @@ a:hover {
 }
 
 .site-mark {
-  color: #fff8ec;
+  color: var(--hero-text);
   font-size: 18px;
   font-weight: 700;
   text-decoration: none;
@@ -109,11 +133,33 @@ a:hover {
   padding: 4px 12px;
   border: 1px solid rgba(247, 239, 227, 0.24);
   border-radius: 999px;
-  color: #f7efe3;
+  color: var(--hero-text);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
   line-height: 1;
   text-decoration: none;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  min-width: 38px;
+  height: 36px;
+  border: 1px solid rgba(247, 239, 227, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--hero-text);
+  cursor: pointer;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.theme-toggle:hover {
+  border-color: rgba(247, 239, 227, 0.66);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .nav-links a:hover {
@@ -123,7 +169,7 @@ a:hover {
 
 .hero-kicker {
   margin: 0 0 10px;
-  color: #cfe4df;
+  color: var(--hero-kicker);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
   font-weight: 700;
@@ -134,7 +180,7 @@ a:hover {
 .hero-title {
   max-width: 760px;
   margin: 0;
-  color: #fff8ec;
+  color: var(--hero-text);
   font-size: clamp(42px, 7vw, 72px);
   font-weight: 800;
   line-height: 1.08;
@@ -143,7 +189,7 @@ a:hover {
 .hero-description {
   max-width: 680px;
   margin: 22px 0 0;
-  color: #dfd6c9;
+  color: var(--hero-muted);
   font-size: 19px;
   line-height: 1.8;
 }
@@ -157,8 +203,8 @@ a:hover {
 }
 
 .paper {
-  background: rgba(251, 248, 240, 0.98);
-  border: 1px solid rgba(222, 214, 200, 0.9);
+  background: var(--paper);
+  border: 1px solid var(--line);
   border-radius: 8px;
   box-shadow: var(--shadow);
 }
@@ -182,7 +228,7 @@ a:hover {
 .post-content h2,
 .post-content h3 {
   margin: 2.2em 0 0.75em;
-  color: #19232d;
+  color: var(--ink);
   line-height: 1.35;
 }
 
@@ -230,7 +276,7 @@ a:hover {
   margin: 1.6em 0;
   padding: 0.35em 0 0.35em 1.1em;
   border-left: 4px solid var(--lake);
-  color: #49535c;
+  color: var(--muted);
   background: rgba(60, 128, 120, 0.06);
 }
 
@@ -238,8 +284,8 @@ a:hover {
 .post-content code {
   padding: 0.12em 0.35em;
   border-radius: 4px;
-  background: #efe6d7;
-  color: #8d3229;
+  background: rgba(201, 155, 84, 0.18);
+  color: var(--ember);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.9em;
 }
@@ -282,7 +328,7 @@ a:hover {
 }
 
 .post-list a {
-  color: #19232d;
+  color: var(--ink);
   font-weight: 700;
   text-decoration: none;
 }
@@ -311,7 +357,7 @@ a:hover {
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(244, 239, 228, 0.72));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), var(--paper-soft));
   color: var(--ink);
   text-decoration: none;
 }
@@ -319,7 +365,7 @@ a:hover {
 .category-card strong {
   display: block;
   margin-bottom: 8px;
-  color: #1a2a34;
+  color: var(--ink);
   font-size: 18px;
 }
 
@@ -348,7 +394,7 @@ a:hover {
 
 .side-title {
   margin: 0 0 12px;
-  color: #1a2a34;
+  color: var(--ink);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
   font-weight: 800;
@@ -358,7 +404,7 @@ a:hover {
 
 .side-panel p,
 .side-panel li {
-  color: #515b63;
+  color: var(--muted);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
   line-height: 1.75;
@@ -392,7 +438,7 @@ a:hover {
 
 .post-title {
   margin: 0;
-  color: #172431;
+  color: var(--ink);
   font-size: clamp(34px, 6vw, 56px);
   line-height: 1.2;
 }
@@ -411,7 +457,7 @@ a:hover {
   padding: 3px 10px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  color: #506069;
+  color: var(--muted);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
 }
@@ -441,7 +487,7 @@ a:hover {
   width: min(1080px, calc(100% - 36px));
   margin: 0 auto;
   padding: 18px 0 34px;
-  color: #7d7468;
+  color: var(--muted);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
   text-align: center;
@@ -469,7 +515,7 @@ a:hover {
 }
 
 .writer-field label {
-  color: #1a2a34;
+  color: var(--ink);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
   font-weight: 800;
@@ -481,8 +527,8 @@ a:hover {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(255, 253, 247, 0.88);
-  color: var(--ink);
+  background: var(--field);
+  color: var(--field-ink);
   font: inherit;
   line-height: 1.6;
 }
@@ -503,6 +549,90 @@ a:hover {
   min-height: 420px;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 15px;
+}
+
+.writer-editor-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.writer-preview {
+  min-height: 420px;
+  max-height: 720px;
+  overflow: auto;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+}
+
+.writer-preview:empty::before {
+  content: "Markdown 预览会显示在这里。";
+  color: var(--muted);
+}
+
+.writer-preview h1,
+.writer-preview h2,
+.writer-preview h3 {
+  margin-top: 1.4em;
+  line-height: 1.35;
+}
+
+.writer-preview h1:first-child,
+.writer-preview h2:first-child,
+.writer-preview h3:first-child {
+  margin-top: 0;
+}
+
+.writer-preview h1 {
+  font-size: 28px;
+}
+
+.writer-preview h2 {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  font-size: 23px;
+}
+
+.writer-preview p {
+  margin: 1em 0;
+}
+
+.writer-preview ul,
+.writer-preview ol {
+  padding-left: 1.4em;
+}
+
+.writer-preview blockquote {
+  margin: 1.2em 0;
+  padding-left: 1em;
+  border-left: 4px solid var(--lake);
+  color: var(--muted);
+}
+
+.writer-preview pre {
+  overflow-x: auto;
+  padding: 14px;
+  border-radius: 8px;
+  background: #111b24;
+  color: #f4eadb;
+  line-height: 1.6;
+}
+
+.writer-preview code {
+  padding: 0.12em 0.32em;
+  border-radius: 4px;
+  background: rgba(201, 155, 84, 0.18);
+  color: var(--ember);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
+}
+
+.writer-preview pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
 }
 
 .writer-field input:focus,
@@ -592,6 +722,10 @@ a:hover {
   }
 
   .writer-row {
+    grid-template-columns: 1fr;
+  }
+
+  .writer-editor-grid {
     grid-template-columns: 1fr;
   }
 }
