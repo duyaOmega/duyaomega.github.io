@@ -11,7 +11,7 @@
       {%- endif -%}
     </title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | escape }}">
-    <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/site.css?v=20260524b' | relative_url }}">
     <script>
       (() => {
         const saved = localStorage.getItem("blog-theme");
@@ -64,6 +64,6 @@
         <span>{{ site.description | escape }}</span>
       </footer>
     </div>
-    <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/theme.js?v=20260524b' | relative_url }}"></script>
   </body>
 </html>
