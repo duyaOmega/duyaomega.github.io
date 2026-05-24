@@ -9,7 +9,7 @@ hero_description: 笔记、文学写作和各种乱七八糟的东西。你愿�
   <section class="content-panel paper">
     <h2>我是谁</h2>
     <ul>
-      <li>你可以称呼我为 渡鸦/迷迭鸦/duya/RavenX/~~猫娘/犬娘/迷迭香小姐的狗~~</li>
+      <li>你可以称呼我为 渡鸦/迷迭鸦/duya/RavenX/<del>猫娘/犬娘/迷迭香小姐的狗</del></li>
       <li>北京大学信科在读鼠鼠，大概会走 cs 专业</li>
       <li>b 站非著名 up/低质量小说产出者/（前）笑话公众号运营者</li>
     </ul>

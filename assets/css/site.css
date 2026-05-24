@@ -56,6 +56,11 @@ body {
   letter-spacing: 0;
 }
 
+body.is-resizing-editor {
+  cursor: col-resize;
+  user-select: none;
+}
+
 a {
   color: #1e706b;
   text-decoration-thickness: 1px;
@@ -74,7 +79,8 @@ a:hover {
   position: relative;
   overflow: hidden;
   color: #f7efe3;
-  padding: 34px 24px 80px;
+  min-height: 430px;
+  padding: 34px 24px 104px;
 }
 
 .site-hero::before {
@@ -84,7 +90,7 @@ a:hover {
   background:
     radial-gradient(circle at 75% 20%, rgba(238, 214, 161, 0.2), transparent 18rem),
     linear-gradient(120deg, rgba(13, 24, 36, 0.62), rgba(21, 43, 58, 0.38)),
-    url("/assets/img/night-lake-hero.png") center bottom / cover no-repeat;
+    url("/assets/img/night-lake-hero.png") center 38% / cover no-repeat;
 }
 
 .site-hero::after {
@@ -196,7 +202,7 @@ a:hover {
 
 .page-wrap {
   width: min(1080px, calc(100% - 36px));
-  margin: -42px auto 0;
+  margin: -58px auto 0;
   padding-bottom: 64px;
   position: relative;
   z-index: 2;
@@ -560,7 +566,7 @@ a:hover {
 .writer-editor {
   --editor-left: 50%;
   display: grid;
-  grid-template-columns: minmax(260px, var(--editor-left)) 10px minmax(260px, 1fr);
+  grid-template-columns: minmax(260px, 1fr) 10px minmax(260px, 1fr);
   min-height: 560px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -737,7 +743,8 @@ a:hover {
   }
 
   .site-hero {
-    padding: 24px 18px 70px;
+    min-height: 390px;
+    padding: 24px 18px 82px;
   }
 
   .site-nav {

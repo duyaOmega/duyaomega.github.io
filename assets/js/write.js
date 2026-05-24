@@ -428,33 +428,48 @@
     const saved = localStorage.getItem("writer-split");
 
     if (saved) {
-      editor.style.setProperty("--editor-left", saved);
+      applySplit(Number(saved));
     }
 
     const move = (clientX) => {
       const rect = editor.getBoundingClientRect();
       const percent = ((clientX - rect.left) / rect.width) * 100;
       const clamped = Math.min(72, Math.max(28, percent));
-      const value = `${clamped.toFixed(1)}%`;
-      editor.style.setProperty("--editor-left", value);
-      localStorage.setItem("writer-split", value);
+      applySplit(clamped);
+      localStorage.setItem("writer-split", clamped.toFixed(1));
+    };
+
+    const stopDrag = () => {
+      document.body.classList.remove("is-resizing-editor");
     };
 
     resizer.addEventListener("pointerdown", (event) => {
       event.preventDefault();
       resizer.setPointerCapture(event.pointerId);
+      document.body.classList.add("is-resizing-editor");
 
       const onMove = (moveEvent) => move(moveEvent.clientX);
       const onUp = () => {
         resizer.removeEventListener("pointermove", onMove);
         resizer.removeEventListener("pointerup", onUp);
         resizer.removeEventListener("pointercancel", onUp);
+        stopDrag();
       };
 
       resizer.addEventListener("pointermove", onMove);
       resizer.addEventListener("pointerup", onUp);
       resizer.addEventListener("pointercancel", onUp);
     });
+
+    function applySplit(leftPercent) {
+      if (!Number.isFinite(leftPercent)) {
+        return;
+      }
+
+      const left = Math.min(72, Math.max(28, leftPercent));
+      const right = 100 - left;
+      editor.style.gridTemplateColumns = `minmax(220px, ${left}fr) 10px minmax(220px, ${right}fr)`;
+    }
   }
 
   function typesetMath(element) {
