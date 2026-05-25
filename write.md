@@ -77,4 +77,4 @@ hero_description: 在这里整理标题、分类、标签和正文，然后交�
   </form>
 </section>
 
-<script src="{{ '/assets/js/write.js?v=20260525a' | relative_url }}"></script>
+<script src="{{ '/assets/js/write.js?v=20260525b' | relative_url }}"></script>

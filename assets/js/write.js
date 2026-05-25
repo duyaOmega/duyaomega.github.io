@@ -7,7 +7,7 @@
   const loadExistingButton = document.querySelector("#load-existing-post");
   const copyButton = document.querySelector("#copy-issue-body");
   const status = document.querySelector("#writer-status");
-  let previewHeightObserver;
+  let previewSizeObserver;
 
   if (!form) {
     return;
@@ -18,7 +18,7 @@
 
   setDefaultDate();
   populateExistingPosts();
-  syncPreviewHeight();
+  syncPreviewSize();
   updatePreview();
 
   bodyInput?.addEventListener("input", updatePreview);
@@ -420,28 +420,37 @@
       .replace(/\.md$/, "");
   }
 
-  function syncPreviewHeight() {
+  function syncPreviewSize() {
     if (!editor || !bodyInput) {
       return;
     }
 
-    const applyHeight = () => {
+    const applySize = () => {
+      const editorWidth = editor.clientWidth || 920;
+      const bodyWidth = bodyInput.offsetWidth || Math.round(editorWidth / 2);
+      const minPreviewWidth = 220;
+      const maxBodyWidth = Math.max(220, editorWidth - minPreviewWidth);
+      const clampedBodyWidth = Math.min(maxBodyWidth, Math.max(220, bodyWidth));
+
+      editor.style.setProperty("--writer-editor-width", `${editorWidth}px`);
+      editor.style.setProperty("--writer-body-width", `${clampedBodyWidth}px`);
       editor.style.setProperty("--writer-body-height", `${bodyInput.offsetHeight}px`);
     };
 
-    applyHeight();
+    applySize();
 
     if (window.ResizeObserver) {
-      previewHeightObserver?.disconnect();
-      const observer = new ResizeObserver(applyHeight);
+      previewSizeObserver?.disconnect();
+      const observer = new ResizeObserver(applySize);
       observer.observe(bodyInput);
-      previewHeightObserver = observer;
+      observer.observe(editor);
+      previewSizeObserver = observer;
       return;
     }
 
-    window.addEventListener("resize", applyHeight);
-    bodyInput.addEventListener("mouseup", applyHeight);
-    bodyInput.addEventListener("keyup", applyHeight);
+    window.addEventListener("resize", applySize);
+    bodyInput.addEventListener("mouseup", applySize);
+    bodyInput.addEventListener("keyup", applySize);
   }
 
   function typesetMath(element) {

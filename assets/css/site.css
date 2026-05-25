@@ -553,11 +553,12 @@ a:hover {
 }
 
 .writer-editor {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  --writer-body-width: 50%;
+  display: flex;
+  align-items: flex-start;
   border: 1px solid var(--line);
   border-radius: 8px;
-  overflow: visible;
+  overflow: hidden;
   background: var(--field);
 }
 
@@ -565,6 +566,18 @@ a:hover {
   display: grid;
   grid-template-rows: auto auto;
   min-width: 0;
+}
+
+.writer-source-pane {
+  flex: 0 0 var(--writer-body-width);
+  min-width: 220px;
+  max-width: calc(100% - 220px);
+  border-right: 1px solid var(--line);
+}
+
+.writer-preview-pane {
+  flex: 1 1 auto;
+  min-width: 220px;
 }
 
 .writer-pane label {
@@ -583,17 +596,15 @@ a:hover {
   display: block;
   width: 100%;
   min-height: 360px;
+  min-width: 220px;
   max-height: 78vh;
+  max-width: calc(var(--writer-editor-width, 920px) - 220px);
   padding: 12px;
-  resize: vertical;
+  resize: both;
   color: var(--field-ink);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 15px;
   line-height: 1.6;
-}
-
-.writer-source-pane {
-  border-right: 1px solid var(--line);
 }
 
 .writer-preview {
@@ -778,7 +789,13 @@ a:hover {
   }
 
   .writer-source-pane {
+    max-width: none;
     border-right: 0;
+  }
+
+  #post-body {
+    max-width: 100%;
+    resize: vertical;
   }
 
   .writer-preview-pane {
