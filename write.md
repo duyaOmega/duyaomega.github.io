@@ -60,10 +60,8 @@ hero_description: 在这里整理标题、分类、标签和正文，然后交�
     <div class="writer-editor" id="writer-editor">
       <div class="writer-pane writer-source-pane">
         <label for="post-body">正文</label>
-        <textarea id="post-body" name="body" placeholder="在这里写正文，支持 Markdown。" required></textarea>
+        <textarea id="post-body" name="body" rows="18" placeholder="在这里写正文，支持 Markdown。" required></textarea>
       </div>
-
-      <button class="writer-resizer" type="button" id="writer-resizer" aria-label="拖动调整编辑和预览宽度"></button>
 
       <div class="writer-pane writer-preview-pane">
         <label for="post-preview">预览</label>
@@ -79,4 +77,4 @@ hero_description: 在这里整理标题、分类、标签和正文，然后交�
   </form>
 </section>
 
-<script src="{{ '/assets/js/write.js?v=20260524b' | relative_url }}"></script>
+<script src="{{ '/assets/js/write.js?v=20260525a' | relative_url }}"></script>
