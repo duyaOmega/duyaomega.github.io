@@ -85,7 +85,8 @@ a:hover {
   background:
     radial-gradient(circle at 75% 20%, rgba(238, 214, 161, 0.2), transparent 18rem),
     linear-gradient(120deg, rgba(13, 24, 36, 0.62), rgba(21, 43, 58, 0.38)),
-    url("/assets/img/night-lake-hero.png") center 38% / cover no-repeat;
+    var(--hero-bg, url("/assets/img/night-lake-hero.png")) center 38% / cover no-repeat;
+  transition: opacity 0.8s ease;
 }
 
 .site-hero::after {

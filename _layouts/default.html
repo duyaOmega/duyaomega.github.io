@@ -65,5 +65,17 @@
       </footer>
     </div>
     <script src="{{ '/assets/js/theme.js?v=20260524b' | relative_url }}"></script>
+    <script>
+      (function() {
+        var imgs = [
+          '{{ "/assets/img/night-lake-hero.png" | relative_url }}',
+          '{{ "/assets/img/aquarium.jpg" | relative_url }}',
+          '{{ "/assets/img/dreamy.jpg" | relative_url }}'
+        ];
+        var pick = imgs[Math.floor(Math.random() * imgs.length)];
+        var hero = document.querySelector('.site-hero');
+        if (hero) hero.style.setProperty('--hero-bg', 'url("' + pick + '")');
+      })();
+    </script>
   </body>
 </html>
