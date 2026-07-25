@@ -12,6 +12,7 @@
     </title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | escape }}">
     <link rel="stylesheet" href="{{ '/assets/css/site.css?v=20260525b' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/music.css' | relative_url }}">
     <script>
       (() => {
         const saved = localStorage.getItem("blog-theme");
@@ -65,7 +66,9 @@
         <span>{{ site.description | escape }}</span>
       </footer>
     </div>
+    <div id="bilibili-player"></div>
     <script src="{{ '/assets/js/theme.js?v=20260524b' | relative_url }}"></script>
+    <script src="{{ '/assets/js/music.js' | relative_url }}"></script>
     <script>
       (function() {
         // ── 壁纸列表：往这里加新图即可 ──
