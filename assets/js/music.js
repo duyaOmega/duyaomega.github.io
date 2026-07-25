@@ -1,15 +1,8 @@
 (function () {
   "use strict";
 
-  var MEDIA_ID = "1464673965";
-  var PROXIES = [
-    "https://api.allorigins.win/raw?url=",
-    "https://corsproxy.io/?",
-    "https://api.codetabs.com/v1/proxy?quest=",
-  ];
-  var PAGE_SIZE = 20;
-
   var playlist = [];
+  var playlistTitle = "音乐播放器";
   var currentBvid = null;
   var expanded = false;
 
@@ -19,69 +12,24 @@
     return m + ":" + (s < 10 ? "0" : "") + s;
   }
 
-  function apiUrl(pn) {
-    return (
-      "https://api.bilibili.com/x/v3/fav/resource/list?media_id=" +
-      MEDIA_ID +
-      "&pn=" +
-      pn +
-      "&ps=" +
-      PAGE_SIZE
-    );
+  function esc(s) {
+    var d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
   }
 
-  function fetchWithProxy(url, proxyIdx) {
-    if (proxyIdx >= PROXIES.length)
-      return Promise.reject(new Error("All proxies failed"));
-    return fetch(PROXIES[proxyIdx] + encodeURIComponent(url)).then(
-      function (r) {
+  function loadPlaylist() {
+    return fetch("/assets/playlist.json")
+      .then(function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
-      }
-    ).catch(function () {
-      return fetchWithProxy(url, proxyIdx + 1);
-    });
-  }
-
-  function fetchPage(pn) {
-    return fetchWithProxy(apiUrl(pn), 0).then(function (d) {
-      if (d.code !== 0 || !d.data || !d.data.medias)
-        return { items: [], total: 0 };
-      return {
-        items: d.data.medias.map(function (m) {
-          return {
-            bvid: m.bvid,
-            title: m.title,
-            cover: m.cover,
-            duration: m.duration,
-            artist: m.upper ? m.upper.name : "",
-          };
-        }),
-        total: d.data.info ? d.data.info.media_count : 0,
-      };
-    });
-  }
-
-  function fetchAll() {
-    return fetchPage(1)
-      .then(function (first) {
-        playlist = first.items;
+      })
+      .then(function (data) {
+        playlistTitle = data.title || playlistTitle;
+        playlist = data.songs || [];
+        var heading = document.querySelector(".mp-heading");
+        if (heading) heading.textContent = playlistTitle;
         renderList();
-        var totalPages = Math.ceil(first.total / PAGE_SIZE);
-        var chain = Promise.resolve();
-        for (var pn = 2; pn <= totalPages; pn++) {
-          chain = chain
-            .then(function (p) {
-              return function () {
-                return fetchPage(p);
-              };
-            }(pn))
-            .then(function (data) {
-              playlist = playlist.concat(data.items);
-              renderList();
-            });
-        }
-        return chain;
       })
       .catch(function () {
         var list = document.getElementById("mp-list");
@@ -93,7 +41,7 @@
           retry.addEventListener("click", function () {
             list.innerHTML =
               '<div class="mp-loading">加载中…</div>';
-            fetchAll();
+            loadPlaylist();
           });
       });
   }
@@ -139,12 +87,6 @@
     }
   }
 
-  function esc(s) {
-    var d = document.createElement("div");
-    d.textContent = s;
-    return d.innerHTML;
-  }
-
   function playSong(bvid) {
     currentBvid = bvid;
     var frame = document.getElementById("mp-frame");
@@ -177,7 +119,7 @@
       "</button>" +
       '<div class="mp-panel" id="mp-panel">' +
       '<div class="mp-header">' +
-      '<span class="mp-heading">赛博渡鸦会梦见虚拟歌姬吗</span>' +
+      '<span class="mp-heading">音乐播放器</span>' +
       '<button class="mp-close" id="mp-close" aria-label="关闭">&times;</button>' +
       "</div>" +
       '<div class="mp-player-area">' +
@@ -195,7 +137,7 @@
     document
       .getElementById("mp-close")
       .addEventListener("click", toggle);
-    fetchAll();
+    loadPlaylist();
   }
 
   function toggle() {
