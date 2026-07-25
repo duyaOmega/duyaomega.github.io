@@ -3,10 +3,7 @@
 
   var MEDIA_ID = "1464673965";
   var PROXY = "https://api.allorigins.win/raw?url=";
-  var API_BASE =
-    "https://api.bilibili.com/x/v3/fav/resource/list?media_id=" +
-    MEDIA_ID +
-    "&pn=1&ps=20";
+  var PAGE_SIZE = 20;
 
   var playlist = [];
   var currentBvid = null;
@@ -18,67 +15,82 @@
     return m + ":" + (s < 10 ? "0" : "") + s;
   }
 
+  function apiUrl(pn) {
+    return (
+      "https://api.bilibili.com/x/v3/fav/resource/list?media_id=" +
+      MEDIA_ID +
+      "&pn=" +
+      pn +
+      "&ps=" +
+      PAGE_SIZE
+    );
+  }
+
   function fetchPage(pn) {
-    var url =
-      PROXY +
-      encodeURIComponent(
-        "https://api.bilibili.com/x/v3/fav/resource/list?media_id=" +
-          MEDIA_ID +
-          "&pn=" +
-          pn +
-          "&ps=20"
-      );
-    return fetch(url)
+    return fetch(PROXY + encodeURIComponent(apiUrl(pn)))
       .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
       })
       .then(function (d) {
-        if (d.code !== 0 || !d.data || !d.data.medias) return [];
-        return d.data.medias.map(function (m) {
-          return {
-            bvid: m.bvid,
-            title: m.title,
-            cover: m.cover,
-            duration: m.duration,
-            artist: m.upper ? m.upper.name : "",
-          };
-        });
+        if (d.code !== 0 || !d.data || !d.data.medias)
+          return { items: [], total: 0 };
+        return {
+          items: d.data.medias.map(function (m) {
+            return {
+              bvid: m.bvid,
+              title: m.title,
+              cover: m.cover,
+              duration: m.duration,
+              artist: m.upper ? m.upper.name : "",
+            };
+          }),
+          total: d.data.info ? d.data.info.media_count : 0,
+        };
       });
   }
 
   function fetchAll() {
-    return fetchPage(1).then(function (first) {
-      playlist = first;
-      renderList();
-      return fetchPage(2).then(function (p2) {
-        playlist = playlist.concat(p2);
+    return fetchPage(1)
+      .then(function (first) {
+        playlist = first.items;
         renderList();
-        return fetchPage(3).then(function (p3) {
-          playlist = playlist.concat(p3);
-          renderList();
-          return fetchPage(4).then(function (p4) {
-            playlist = playlist.concat(p4);
-            renderList();
-            return fetchPage(5).then(function (p5) {
-              playlist = playlist.concat(p5);
+        var totalPages = Math.ceil(first.total / PAGE_SIZE);
+        var chain = Promise.resolve();
+        for (var pn = 2; pn <= totalPages; pn++) {
+          chain = chain
+            .then(function (p) {
+              return function () {
+                return fetchPage(p);
+              };
+            }(pn))
+            .then(function (data) {
+              playlist = playlist.concat(data.items);
               renderList();
-              return fetchPage(6).then(function (p6) {
-                playlist = playlist.concat(p6);
-                renderList();
-              });
             });
+        }
+        return chain;
+      })
+      .catch(function () {
+        var list = document.getElementById("mp-list");
+        if (list)
+          list.innerHTML =
+            '<div class="mp-empty">加载失败，<a href="javascript:void(0)" id="mp-retry">点击重试</a></div>';
+        var retry = document.getElementById("mp-retry");
+        if (retry)
+          retry.addEventListener("click", function () {
+            list.innerHTML =
+              '<div class="mp-loading">加载中…</div>';
+            fetchAll();
           });
-        });
       });
-    });
   }
 
   function renderList() {
     var list = document.getElementById("mp-list");
     if (!list) return;
     if (playlist.length === 0) {
-      list.innerHTML =
-        '<div class="mp-empty">暂无歌曲</div>';
+      list.innerHTML = '<div class="mp-empty">暂无歌曲</div>';
       return;
     }
     var html = "";
@@ -124,6 +136,7 @@
   function playSong(bvid) {
     currentBvid = bvid;
     var frame = document.getElementById("mp-frame");
+    var now = document.getElementById("mp-now");
     if (frame) {
       frame.src =
         "//player.bilibili.com/player.html?bvid=" +
@@ -131,14 +144,16 @@
         "&autoplay=1&high_quality=1";
       frame.style.display = "block";
     }
-    renderList();
-    var now = document.getElementById("mp-now-title");
-    for (var i = 0; i < playlist.length; i++) {
-      if (playlist[i].bvid === bvid) {
-        if (now) now.textContent = playlist[i].title;
-        break;
+    if (now) {
+      for (var i = 0; i < playlist.length; i++) {
+        if (playlist[i].bvid === bvid) {
+          now.textContent = playlist[i].title;
+          now.classList.add("playing");
+          break;
+        }
       }
     }
+    renderList();
   }
 
   function buildUI() {

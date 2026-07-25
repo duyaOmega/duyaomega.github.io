@@ -110,6 +110,12 @@
   align-items: center;
 }
 
+.mp-now.playing {
+  font-weight: 600;
+  color: var(--ink, #202326);
+  border-bottom: 1px solid var(--line, #ded6c8);
+}
+
 .mp-frame {
   width: 100%;
   aspect-ratio: 16 / 9;
