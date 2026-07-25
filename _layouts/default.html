@@ -33,6 +33,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   </head>
   <body>
+    <div class="wallpaper-bg" id="wallpaper-bg"></div>
     <div class="site-shell">
       <header class="site-hero">
         <div class="hero-inner">
@@ -67,14 +68,25 @@
     <script src="{{ '/assets/js/theme.js?v=20260524b' | relative_url }}"></script>
     <script>
       (function() {
-        var imgs = [
-          '{{ "/assets/img/night-lake-hero.png" | relative_url }}',
+        // ── 壁纸列表：往这里加新图即可 ──
+        var wallpapers = [
           '{{ "/assets/img/aquarium.jpg" | relative_url }}',
           '{{ "/assets/img/dreamy.jpg" | relative_url }}'
         ];
-        var pick = imgs[Math.floor(Math.random() * imgs.length)];
+        if (!wallpapers.length) return;
+        var pick = wallpapers[Math.floor(Math.random() * wallpapers.length)];
+        var bg = document.getElementById('wallpaper-bg');
         var hero = document.querySelector('.site-hero');
-        if (hero) hero.style.setProperty('--hero-bg', 'url("' + pick + '")');
+        if (!bg || !hero) return;
+        bg.style.backgroundImage = 'url("' + pick + '")';
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            var show = !e.isIntersecting;
+            bg.classList.toggle('visible', show);
+            document.body.classList.toggle('wallpaper-active', show);
+          });
+        }, { threshold: 0 });
+        observer.observe(hero);
       })();
     </script>
   </body>

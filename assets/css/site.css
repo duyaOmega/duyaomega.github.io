@@ -70,6 +70,15 @@ a:hover {
   min-height: 100vh;
 }
 
+body.wallpaper-active {
+  background: var(--paper-soft);
+}
+
+body.wallpaper-active .page-wrap,
+body.wallpaper-active .site-footer {
+  background: var(--paper);
+}
+
 .site-hero {
   position: relative;
   overflow: hidden;
@@ -85,8 +94,7 @@ a:hover {
   background:
     radial-gradient(circle at 75% 20%, rgba(238, 214, 161, 0.2), transparent 18rem),
     linear-gradient(120deg, rgba(13, 24, 36, 0.62), rgba(21, 43, 58, 0.38)),
-    var(--hero-bg, url("/assets/img/night-lake-hero.png")) center 38% / cover no-repeat;
-  transition: opacity 0.8s ease;
+    url("/assets/img/night-lake-hero.png") center 38% / cover no-repeat;
 }
 
 .site-hero::after {
@@ -831,4 +839,41 @@ a:hover {
   .post-nav a {
     max-width: 100%;
   }
+}
+
+/* === Scroll Wallpaper Background === */
+.wallpaper-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.wallpaper-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 33, 52, 0.5) 0%,
+    rgba(16, 33, 52, 0.25) 40%,
+    rgba(16, 33, 52, 0.45) 100%
+  );
+}
+
+:root[data-theme="dark"] .wallpaper-bg::after {
+  background: linear-gradient(
+    180deg,
+    rgba(8, 16, 23, 0.6) 0%,
+    rgba(8, 16, 23, 0.3) 40%,
+    rgba(8, 16, 23, 0.55) 100%
+  );
+}
+
+.wallpaper-bg.visible {
+  opacity: 1;
 }
