@@ -71,12 +71,21 @@ a:hover {
 }
 
 body.wallpaper-active {
-  background: var(--paper-soft);
+  background: transparent;
 }
 
-body.wallpaper-active .page-wrap,
+body.wallpaper-active .paper {
+  background: rgba(251, 248, 240, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+:root[data-theme="dark"] body.wallpaper-active .paper {
+  background: rgba(23, 34, 44, 0.82);
+}
+
 body.wallpaper-active .site-footer {
-  background: var(--paper);
+  background: transparent;
 }
 
 .site-hero {

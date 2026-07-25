@@ -2,7 +2,11 @@
   "use strict";
 
   var MEDIA_ID = "1464673965";
-  var PROXY = "https://api.allorigins.win/raw?url=";
+  var PROXIES = [
+    "https://api.allorigins.win/raw?url=",
+    "https://corsproxy.io/?",
+    "https://api.codetabs.com/v1/proxy?quest=",
+  ];
   var PAGE_SIZE = 20;
 
   var playlist = [];
@@ -26,28 +30,36 @@
     );
   }
 
-  function fetchPage(pn) {
-    return fetch(PROXY + encodeURIComponent(apiUrl(pn)))
-      .then(function (r) {
+  function fetchWithProxy(url, proxyIdx) {
+    if (proxyIdx >= PROXIES.length)
+      return Promise.reject(new Error("All proxies failed"));
+    return fetch(PROXIES[proxyIdx] + encodeURIComponent(url)).then(
+      function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
-      })
-      .then(function (d) {
-        if (d.code !== 0 || !d.data || !d.data.medias)
-          return { items: [], total: 0 };
-        return {
-          items: d.data.medias.map(function (m) {
-            return {
-              bvid: m.bvid,
-              title: m.title,
-              cover: m.cover,
-              duration: m.duration,
-              artist: m.upper ? m.upper.name : "",
-            };
-          }),
-          total: d.data.info ? d.data.info.media_count : 0,
-        };
-      });
+      }
+    ).catch(function () {
+      return fetchWithProxy(url, proxyIdx + 1);
+    });
+  }
+
+  function fetchPage(pn) {
+    return fetchWithProxy(apiUrl(pn), 0).then(function (d) {
+      if (d.code !== 0 || !d.data || !d.data.medias)
+        return { items: [], total: 0 };
+      return {
+        items: d.data.medias.map(function (m) {
+          return {
+            bvid: m.bvid,
+            title: m.title,
+            cover: m.cover,
+            duration: m.duration,
+            artist: m.upper ? m.upper.name : "",
+          };
+        }),
+        total: d.data.info ? d.data.info.media_count : 0,
+      };
+    });
   }
 
   function fetchAll() {
